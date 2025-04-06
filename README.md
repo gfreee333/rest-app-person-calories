@@ -9,7 +9,8 @@ REST API для отслеживания калорий и истории пит
 ------------------------------------------------------------------------------
 Структура базы данных
 ------------------------------------------------------------------------------
-CREATE TABLE Users(
+```sql
+    CREATE TABLE Users(
     id int generated always as identity primary key,
     name varchar(20) not null,
     email varchar(100) not null unique,
@@ -38,7 +39,7 @@ create table Meal_Dishes(
     id_meal int references Meal(id),
     id_dish int references Dishes(id)
 );
-
+```
 ------------------------------------------------------------------------------
 ## Запуск приложения
 ------------------------------------------------------------------------------
