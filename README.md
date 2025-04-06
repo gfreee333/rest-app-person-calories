@@ -50,57 +50,141 @@ create table Meal_Dishes(
     ```bash
     java -jar target/rest-app-person-calories-0.0.1-SNAPSHOT.jar
 ------------------------------------------------------------------------------
-ЭНДПОИНТЫ
-------------------------------------------------------------------------------
-* POST /api/add: Добавление нового пользователя в таблицу.
-  Пример запроса: JSON
-  {   
-    "name": "Снежанна",
-    "email": "Снежок@mail.com",
-    "age": "20",
-    "weight": "65",
-    "height": "165",
-    "purpose": "Поддержание"
-}
-* POST /api/dishes/add: Добавление нового блюда в таблицу.
-  Пример запроса: JSON
-  {
-    "name": "Творог",
-    "caloriesPerPortion": 240,
-    "nutrients": "Белки: 30, Жиры: 50, Углеводы: 10"
-}
-* POST /api/meal/add: Добавление нового приема пищи в таблицу.
-  Пример запроса: JSON
-  {
-  "mealName": "обед",
-  "user_id": 1,
-  "dishIds": [5, 3]
-}
-  
-* GET /api/meal/calories/today/{user_id}: Получение количества потребляемых калорий у конкретного пользователя за сегодня. Замените {user_id} на ID пользователя.
-  Пример ответа: JSON
-  {
-    "message": "Пользователь | User_id = 1 | Кол-во потребленных калорий пользователем за сутки: 480.0  Дневная норма пользователя: | 3064.284 | ",
-    "totalCalories": true
-}
-* GET /api/meal/history/{user_id}: Получение истории питания конкретного пользователя по дням. Замените {user_id} на ID пользователя.
-  Пример ответа: JSON
-  [
+## Эндпоинты
+
+### 1. Добавление нового пользователя
+
+*   `POST /api/add`
+
+    **Пример запроса (curl):**
+
+    ```bash
+    curl -X POST -H "Content-Type: application/json" -d '{
+        "name": "Снежанна",
+        "email": "Снежок@mail.com",
+        "age": 20,
+        "weight": 65,
+        "height": 165,
+        "purpose": "Поддержание"
+    }' http://localhost:8080/api/add
+    ```
+
+    **Пример ответа (успех):**
+
+    ```json
     {
-        "mealDate": "2025-04-06",
-        "mealName": "Полноценный обед",
-        "dishName": "Свинина",
-        "dishCalories": 240.0,
-        "dishNutrients": "Белки: 30, Жиры: 50, Углеводы: 10"
-    },
-    {
-        "mealDate": "2025-04-06",
-        "mealName": "Полноценный обед",
-        "dishName": "Сало",
-        "dishCalories": 120.0,
-        "dishNutrients": "Белки: 10, Жиры: 50, Углеводы: 10"
+        "id": 1,
+        "name": "Снежанна",
+        "email": "Снежок@mail.com",
+        "age": 20,
+        "weight": 65,
+        "height": 165,
+        "purpose": "Поддержание"
     }
-  ]
+    ```
+
+### 2. Добавление нового блюда
+
+*   `POST /api/dishes/add`
+
+    **Пример запроса (curl):**
+
+    ```bash
+    curl -X POST -H "Content-Type: application/json" -d '{
+        "name": "Творог",
+        "caloriesPerPortion": 240,
+        "nutrients": "Белки: 30, Жиры: 50, Углеводы: 10"
+    }' http://localhost:8080/api/dishes/add
+    ```
+
+    **Пример ответа (успех):**
+
+    ```json
+    {
+        "id": 1,
+        "name": "Творог",
+        "caloriesPerPortion": 240,
+        "nutrients": "Белки: 30, Жиры: 50, Углеводы: 10"
+    }
+    ```
+
+### 3. Добавление нового приема пищи
+
+*   `POST /api/meal/add`
+
+    **Пример запроса (curl):**
+
+    ```bash
+    curl -X POST -H "Content-Type: application/json" -d '{
+        "mealName": "обед",
+        "user_id": 1,
+        "dishIds": [5, 3]
+    }' http://localhost:8080/api/meal/add
+    ```
+
+    **Пример ответа (успех):**
+
+    ```json
+    {
+        "id": 1,
+        "mealName": "обед",
+        "userId": 1,
+        "dishIds": [5, 3],
+        "date": "2024-01-01"
+    }
+    ```
+
+### 4. Получение количества потребляемых калорий за сегодня
+
+*   `GET /api/meal/calories/today/{user_id}`
+    *   Замените `{user_id}` на ID пользователя.
+
+    **Пример запроса (curl):**
+
+    ```bash
+    curl http://localhost:8080/api/meal/calories/today/1
+    ```
+
+    **Пример ответа:**
+
+    ```json
+    {
+        "message": "Пользователь | User_id = 1 | Кол-во потребленных калорий пользователем за сутки: 480.0  Дневная норма пользователя: | 3064.284 | ",
+        "totalCalories": true
+    }
+    ```
+
+### 5. Получение истории питания конкретного пользователя по дням
+
+*   `GET /api/meal/history/{user_id}`
+    *   Замените `{user_id}` на ID пользователя.
+
+    **Пример запроса (curl):**
+
+    ```bash
+    curl http://localhost:8080/api/meal/history/1
+    ```
+
+    **Пример ответа:**
+
+    ```json
+    [
+        {
+            "mealDate": "2025-04-06",
+            "mealName": "Полноценный обед",
+            "dishName": "Свинина",
+            "dishCalories": 240.0,
+            "dishNutrients": "Белки: 30, Жиры: 50, Углеводы: 10"
+        },
+        {
+            "mealDate": "2025-04-06",
+            "mealName": "Полноценный обед",
+            "dishName": "Сало",
+            "dishCalories": 120.0,
+            "dishNutrients": "Белки: 10, Жиры: 50, Углеводы: 10"
+        }
+    ]
+    ```
 ------------------------------------------------------------------------------
 Примеры запросов при помощи POSTMAN:
 https://winter-robot-780381.postman.co/workspace/My-Workspace~a0d022f3-59f2-4cb0-8134-6c7af68f7448/collection/18993989-edf75407-4aeb-4727-8020-945037383eca?action=share&creator=18993989
