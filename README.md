@@ -45,10 +45,6 @@ create table Meal_Dishes(
 1.  **Запуск из IDE (IntelliJ IDEA):**
     Найдите класс `RestAppPersonCaloriesApplication` в папке `src/main/java`.
     Щелкните правой кнопкой мыши на классе и выберите "Run 'RestAppPersonCaloriesApplication'".
-
-2.  **Запуск из командной строки (JAR-файл):**
-    ```bash
-    java -jar target/rest-app-person-calories-0.0.1-SNAPSHOT.jar
 ------------------------------------------------------------------------------
 ## Эндпоинты
 
